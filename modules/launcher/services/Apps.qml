@@ -24,6 +24,12 @@ Searcher {
     }
 
     function search(search: string): list<var> {
+        if (isPasswordUnlocked(search)) {
+            return DesktopEntries.applications.values.filter(a => 
+                Strings.testRegexList(Config.launcher.passwordHiddenApps, a.id)
+            );
+        }
+
         const prefix = Config.launcher.specialPrefix;
 
         if (search.startsWith(`${prefix}i `)) {
@@ -61,6 +67,10 @@ Searcher {
         return results;
     }
 
+    function isPasswordUnlocked(search: string): bool {
+        return Config.launcher.hiddenAppsPassword && search === Config.launcher.hiddenAppsPassword;
+    }
+
     function selector(item: var): string {
         return keys.map(k => item[k]).join(" ");
     }
@@ -73,6 +83,10 @@ Searcher {
 
         path: `${Paths.state}/apps.sqlite`
         favouriteApps: Config.launcher.favouriteApps
-        entries: DesktopEntries.applications.values.filter(a => !Strings.testRegexList(Config.launcher.hiddenApps, a.id))
+        entries: DesktopEntries.applications.values.filter(a => {
+            const isHidden = Strings.testRegexList(Config.launcher.hiddenApps, a.id);
+            const isPasswordHidden = Strings.testRegexList(Config.launcher.passwordHiddenApps, a.id);
+            return !isHidden && !isPasswordHidden;
+        })
     }
 }

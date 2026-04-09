@@ -79,6 +79,7 @@ Item {
             bottomPadding: Appearance.padding.larger
 
             placeholderText: qsTr("Type \"%1\" for commands").arg(Config.launcher.actionPrefix)
+            echoMode: Apps.isPasswordUnlocked(text) ? TextInput.Password : TextInput.Normal
 
             onAccepted: {
                 const currentItem = list.currentList?.currentItem;
@@ -130,8 +131,9 @@ Item {
 
             Connections {
                 function onLauncherChanged(): void {
-                    if (!root.visibilities.launcher)
+                    if (!root.visibilities.launcher) {
                         search.text = "";
+                    }
                 }
 
                 function onSessionChanged(): void {

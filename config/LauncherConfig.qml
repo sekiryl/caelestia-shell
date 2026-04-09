@@ -12,6 +12,8 @@ JsonObject {
     property bool vimKeybinds: false
     property list<string> favouriteApps: []
     property list<string> hiddenApps: []
+    property string hiddenAppsPassword: ""
+    property list<string> passwordHiddenApps: []
     property UseFuzzy useFuzzy: UseFuzzy {}
     property Sizes sizes: Sizes {}
 
