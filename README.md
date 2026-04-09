@@ -1,3 +1,7 @@
+- How to use `mp4` as wallpaper?
+    - Paste your wallpaper path (must be absolute) in `~/.local/state/caelestia/wallpaper/path.txt` and restart your shell.
+
+
 <h1 align=center>caelestia-shell</h1>
 
 <div align=center>

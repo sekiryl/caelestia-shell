@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtMultimedia
 import Quickshell
 import Quickshell.Wayland
 import qs.components.containers
@@ -35,12 +36,36 @@ Variants {
             Loader {
                 id: wallpaper
 
+                readonly property bool isVideo: /\.(mp4|mkv|webm|avi|mov)$/i.test(Wallpapers.current)
+
                 asynchronous: true
 
                 anchors.fill: parent
                 active: Config.background.wallpaperEnabled
 
-                sourceComponent: Wallpaper {}
+                sourceComponent: isVideo ? videoWallpaper : imageWallpaper
+            }
+
+            Component {
+                id: imageWallpaper
+                Wallpaper {}
+            }
+
+            Component {
+                id: videoWallpaper
+                Item {
+                    VideoOutput {
+                        id: videoOutput
+                        anchors.fill: parent
+                        fillMode: VideoOutput.PreserveAspectCrop
+                    }
+                    MediaPlayer {
+                        source: Wallpapers.current
+                        videoOutput: videoOutput
+                        loops: MediaPlayer.Infinite
+                        Component.onCompleted: play()
+                    }
+                }
             }
 
             Visualiser {
