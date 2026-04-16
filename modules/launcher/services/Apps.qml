@@ -26,7 +26,7 @@ Searcher {
     function search(search: string): list<var> {
         if (isPasswordUnlocked(search)) {
             return DesktopEntries.applications.values.filter(a => 
-                Strings.testRegexList(Config.launcher.passwordHiddenApps, a.id)
+                Strings.testRegexList(GlobalConfig.launcher.passwordHiddenApps, a.id)
             );
         }
 
@@ -68,7 +68,7 @@ Searcher {
     }
 
     function isPasswordUnlocked(search: string): bool {
-        return Config.launcher.hiddenAppsPassword && search === Config.launcher.hiddenAppsPassword;
+        return GlobalConfig.launcher.hiddenAppsPassword && search === GlobalConfig.launcher.hiddenAppsPassword;
     }
 
     function selector(item: var): string {

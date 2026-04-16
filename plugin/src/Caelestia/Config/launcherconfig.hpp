@@ -41,6 +41,7 @@ class LauncherConfig : public ConfigObject {
     CONFIG_GLOBAL_PROPERTY(QStringList, favouriteApps)
     CONFIG_GLOBAL_PROPERTY(QStringList, hiddenApps)
     CONFIG_GLOBAL_PROPERTY(QStringList, passwordHiddenApps)
+    CONFIG_GLOBAL_PROPERTY(QString, hiddenAppsPassword)
     CONFIG_SUBOBJECT(LauncherUseFuzzy, useFuzzy)
     CONFIG_GLOBAL_PROPERTY(QVariantList, actions,
         {
